@@ -1,0 +1,25 @@
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  tests:
+    name: Create new zip release
+    runs-on: ubuntu-20.04
+    steps:
+
+      - name: copy repo to runner
+        uses: actions/checkout@v2
+
+      - name: create new zip release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: Latest master version of gitea-installer
+          draft: false
+          prerelease: false
