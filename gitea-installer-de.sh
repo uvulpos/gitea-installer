@@ -1,7 +1,7 @@
 # variablen setzen
 giteadownloader="https://dl.gitea.io/gitea/1.11.4/gitea-1.11.4-linux-amd64"
-# giteaservice="https://raw.githubusercontent.com/uvulpos/gitea-installer/master/config/gitea-service.txt"
 deineIP="$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)"
+pwd="$(pwd)"
 dbuser="giteauser"
 dbpassword=$(date +%s | sha256sum | base64 | head -c 32)
 dbtable="giteadb"
@@ -60,8 +60,7 @@ mv gitea /usr/local/bin/gitea
 
 # erstelle gitea als service
 echo "//-->> erstelle gitea als service"
-# wget -q $giteaservice -O /etc/systemd/system/gitea.service >> /dev/null 2>&1
-cp config/gitea-service.txt /etc/systemd/system/gitea.service
+cp "$pwd/config/gitea-service.txt" "/etc/systemd/system/gitea.service"
 systemctl enable gitea >> /dev/null 2>&1
 service gitea start >> /dev/null 2>&1
 

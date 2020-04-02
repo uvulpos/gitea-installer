@@ -1,6 +1,5 @@
 Requires=mysql.service
 Requires=mariadb.service
-Requires=nginx.service
 
 [Service]
 RestartSec=2s
