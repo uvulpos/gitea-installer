@@ -1,3 +1,6 @@
+[gitea-tutorial-go2prepaid-video]: https://www.youtube.com/watch?v=Tj8a7TSG4sU
+[gitea-tutorial-go2prepaid-thumbnail]: https://i.ytimg.com/vi/Tj8a7TSG4sU/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLBrjPPYZu5KLIZ5Qx_Z0W60i44ojQ
+
 # Gitea Installer
 Documentation:
 - [[English - English]]()
@@ -7,8 +10,8 @@ Documentation:
 #### -- Owners(s) --
 - [@uVulpos](https://github.com/uvulpos)
 
-#### -- Special Thanks --
-- [quBITcode](https://github.com/quBITcode) - helped integrate microsoft sql
+## Tutorials
+[![Go2Prepaid Gitea Video (Installation)][gitea-tutorial-go2prepaid-thumbnail]][gitea-tutorial-go2prepaid-video]  
 
 ## Version:
 Current version: April 2020 (-> 04 2020.3)
