@@ -1,20 +1,12 @@
 [gitea-tutorial-go2prepaid-video]: https://www.youtube.com/watch?v=Tj8a7TSG4sU
 [gitea-tutorial-go2prepaid-thumbnail]: https://i.ytimg.com/vi/Tj8a7TSG4sU/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLBrjPPYZu5KLIZ5Qx_Z0W60i44ojQ
 
-# Gitea Installer
-Documentation:
-- [[English - English]]()
-- [[German - Deutsch]]() (original)
-
-## Contributor
-#### -- Owners(s) --
-- [@uVulpos](https://github.com/uvulpos)
-
 ## Tutorials
+( German )
 [![Go2Prepaid Gitea Video (Installation)][gitea-tutorial-go2prepaid-thumbnail]][gitea-tutorial-go2prepaid-video]  
 
 ## Version:
-Current version: April 2020 (-> 04 2020.3)
+Current version: December 2020 (-> 12 2020.4)
 
 ## License:
 -->> MIT License

@@ -18,12 +18,12 @@ echo ""
 
 sleep 3s
 
-echo "Bitte gib den Downloadlink zur jeweiligen Version an. Alternativ nutze ich folgenden Link: ${giteadownloader_default}"
+echo "Define your downloadpath. Otherwise I use: ${giteadownloader_default}"
 read -p "-> " giteadownloader
 if [[ -z ${giteadownloader} ]]; then
   giteadownloader="${giteadownloader_default}"
 fi
-echo "Du hast folgenden Link gewaehlt: ${giteadownloader}"
+echo "You choose: ${giteadownloader}"
 
 echo ""
 echo ""
@@ -31,18 +31,18 @@ echo "//-->> Update"
 apt-get update -q >> /dev/null 2>&1
 apt-get upgrade -q -y >> /dev/null 2>&1
 
-echo "//-->> Installiere Pakete"
+echo "//-->> Install packages"
 apt-get install git mariadb-server mariadb-client nano -q -y >> /dev/null 2>&1
 
-echo "//-->> Erstelle nutzer: git"
+echo "//-->> Create user: git"
 adduser --system --shell /bin/bash --gecos 'Git Version Control' --group --disabled-password --home /home/git git >> /dev/null 2>&1
 cd /home/git/
 
-echo "//-->> Gitea Herunterladen"
+echo "//-->> Download Gitea"
 wget -q $giteadownloader -O gitea >> /dev/null 2>&1
 chmod +x gitea
 
-echo "//-->> Erstelle alle wichtigen Ordner"
+echo "//-->> Create important folder"
 mkdir -p /var/lib/gitea/custom
 mkdir -p /var/lib/gitea/data
 mkdir -p /var/lib/gitea/data/lfs
@@ -54,32 +54,32 @@ chown root:git /etc/gitea
 chmod 770 /etc/gitea
 
 # insert gitea user
-echo "//-->> Erstelle die Datenbank"
+echo "//-->> Prepare database"
 mysql -e "CREATE USER '$dbuser'@'localhost' IDENTIFIED BY '$dbpassword';"
 mysql -e "CREATE DATABASE $dbtable;"
 mysql -e "GRANT ALL PRIVILEGES ON $dbtable . * TO '$dbuser'@'localhost';"
 mysql -e "FLUSH PRIVILEGES;"
 
 # systemvariable setzen
-echo "//-->> Systemvariablen setzen"
+echo "//-->> Set system variables"
 export GITEA_WORK_DIR=/var/lib/gitea/ >> /dev/null 2>&1
 
-echo "//-->> Kopiere Gitea ins Verzeichnis: /usr/local/bin/gitea (Ersetze dort die Binary um Gitea zu aktualisieren.)"
+echo "//-->> Copy Gite to: /usr/local/bin/gitea (replace binary to upgrade.)"
 mv gitea /usr/local/bin/gitea
 
 # erstelle gitea als service
-echo "//-->> Erstelle Gitea als Service"
+echo "//-->> Create gitea-servive"
 cp "$pwd/config/gitea-service.txt" "/etc/systemd/system/gitea.service"
 systemctl enable gitea >> /dev/null 2>&1
 service gitea start >> /dev/null 2>&1
 
 while true; do
-    read -p "Möchtest du deine Datenbank absichern? [Y/n]" yn
+    read -p "Do you want to secure your mysql-installation? [Y/n]" yn
     case $yn in
         [Yy]* ) mysql_secure_installation; break;;
         [Jj]* ) mysql_secure_installation; break;;
         [Nn]* ) break;;
-        * ) echo "FEHLER! Bitte antworte mit ja oder nein";;
+        * ) echo "ERROR! Please answer with [Y/n]";;
     esac
 done
 
@@ -87,10 +87,10 @@ echo ""
 echo ""
 # datenbankverbindung ausgeben
 echo "##########################################################################"
-echo "Gitea wurde erfolgreich installiert!"
-echo "Bitte öffne nun deinen bowser und besuche die webseite: http://$deineIP:3000"
+echo "Gitea was installed successfully!"
+echo "Now, open your browser and visit: http://$deineIP:3000"
 echo ""
-echo "--- Datenbank ---"
+echo "--- Database ---"
 echo "username: $dbuser"
 echo "password: $dbpassword"
 echo "database: $dbtable"
@@ -99,4 +99,4 @@ echo "author: Tim Riedl - uVulpos"
 echo "license: MIT"
 echo "sourcecode: https://github.com/uvulpos/gitea-installer"
 echo "##########################################################################"
-echo "Viel Spaß!"
+echo "Have fun :)"
