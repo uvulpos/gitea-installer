@@ -5,11 +5,16 @@
 simple bash-script installer to install gitea on ubuntu server
 
 ## Tutorials
-( German )
 [![Go2Prepaid Gitea Video (Installation)][gitea-tutorial-go2prepaid-thumbnail]][gitea-tutorial-go2prepaid-video]  
 
 ## Version:
 Current version: December 2020 (-> 12 2020.4)
+
+## Supported Operating Systems:
+| Name | Status |
+|------|--------|
+|Ubuntu| original supported |
+|Debian| seems to work (never tested) |
 
 ## License:
 -->> MIT License
