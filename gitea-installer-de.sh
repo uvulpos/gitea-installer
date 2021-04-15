@@ -1,5 +1,5 @@
 # variablen setzen
-giteadownloader_default="https://dl.gitea.io/gitea/1.13.0/gitea-1.13.0-linux-amd64"
+giteadownloader_default="https://dl.gitea.io/gitea/1.14.0/gitea-1.14.0-darwin-10.12-amd64"
 deineIP="$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)"
 pwd="$(pwd)"
 dbuser="giteauser"
