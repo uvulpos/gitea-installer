@@ -12,14 +12,18 @@ jobs:
       - name: copy repo to runner
         uses: actions/checkout@v2
 
+      - name: Get current date
+        id: current-date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
       - name: create new zip release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ steps.current-date.outputs.date }}_${{ github.run_id }}
+          release_name: Release ${{ steps.current-date.outputs.date }}_${{ github.run_id }}
           body: Latest master version of gitea-installer
           draft: false
           prerelease: false
