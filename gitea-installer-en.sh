@@ -1,7 +1,28 @@
+# are requirements satisfied
+if ! command -v jq &> /dev/null
+then
+    echo "---"
+    echo "⚠️ Dependencies not satisfied! ⚠️"
+    echo "Please install 'jq' to continue => sudo apt install jq -y"
+    echo "---"
+    exit
+fi
+
+if ! command -v curl &> /dev/null
+then
+    echo "---"
+    echo "⚠️ Dependencies not satisfied! ⚠️"
+    echo "Please install 'curl' to continue => sudo apt install curl -y"
+    echo "---"
+    exit
+fi
+
+
 # variablen setzen
 
 shell_arguments=$1
-giteadownloader_default="https://dl.gitea.io/gitea/1.15/gitea-1.15-linux-amd64"
+gitea_latest_version=${1:-$(curl --silent "https://api.github.com/repos/go-gitea/gitea/releases/latest" | jq -r '.tag_name' 2>&1 | sed -e 's|.*-||' -e 's|^v||')}
+gitea_download_url_default="https://github.com/go-gitea/gitea/releases/download/v${gitea_latest_version}/gitea-${gitea_latest_version}-linux-amd64"
 deineIP="$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)"
 pwd="$(pwd)"
 dbuser="giteauser"
@@ -26,20 +47,17 @@ echo ""
 
 sleep 3s
 
-if [[ run_ci_tests == 1 ]]; then
+# specify your version
+echo "Please insert your needed download-url"
+echo "Alternatively version ${gitea_latest_version} for (amd64) is used: ${gitea_download_url_default}"
+echo "Check out the available versions at: https://github.com/go-gitea/gitea/releases"
 
-  giteadownloader="${giteadownloader_default}"
-
-else
-
-  echo "Define your downloadpath. Otherwise I use: ${giteadownloader_default}"
-  read -p "-> " giteadownloader
-  if [[ -z ${giteadownloader} ]]; then
-    giteadownloader="${giteadownloader_default}"
-  fi
-  echo "You choose: ${giteadownloader}"
-
+read -p "-> " giteadownloader
+if [[ -z ${giteadownloader} ]]; then
+  giteadownloader="${gitea_download_url_default}"
 fi
+echo "You choose: ${giteadownloader}"
+
 
 
 echo ""

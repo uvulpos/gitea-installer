@@ -1,18 +1,31 @@
-# variablen setzen
+# are requirements satisfied
+if ! command -v jq &> /dev/null
+then
+    echo "---"
+    echo "⚠️ Benötigte Abhängigkeiten fehlen! ⚠️"
+    echo "Bitte installiere 'jq' um fortzufahren => sudo apt install jq -y"
+    echo "---"
+    exit
+fi
 
-shell_arguments=$1
-giteadownloader_default="https://dl.gitea.io/gitea/1.15/gitea-1.15-linux-amd64"
+if ! command -v curl &> /dev/null
+then
+    echo "---"
+    echo "⚠️ Dependencies not satisfied! ⚠️"
+    echo "Bitte installiere 'curl' um fortzufahren  => sudo apt install curl -y"
+    echo "---"
+    exit
+fi
+
+
+# variablen setzen
+gitea_latest_version=${1:-$(curl --silent "https://api.github.com/repos/go-gitea/gitea/releases/latest" | jq -r '.tag_name' 2>&1 | sed -e 's|.*-||' -e 's|^v||')}
+gitea_download_url_default="https://github.com/go-gitea/gitea/releases/download/v${gitea_latest_version}/gitea-${gitea_latest_version}-linux-amd64"
 deineIP="$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)"
 pwd="$(pwd)"
 dbuser="giteauser"
 dbpassword=$(date +%s | sha256sum | base64 | head -c 32)
 dbtable="giteadb"
-
-if [[ "$shell_arguments" == "--github-ci-test" ]]; then
-  run_ci_tests=1
-else
-  run_ci_tests=0
-fi
 
 echo ""
 echo ""
@@ -26,20 +39,17 @@ echo ""
 
 sleep 3s
 
-if [[ run_ci_tests == 1 ]]; then
+# specify your version
+echo "Bitte gib den Downloadlink zur jeweiligen Version an."
+echo "Alternativ wird Version ${gitea_latest_version} (amd64) verwendet: ${gitea_download_url_default}"
+echo "Such bitte deine benötigte Version heraus: https://github.com/go-gitea/gitea/releases"
 
-  giteadownloader="${giteadownloader_default}"
-
-else
-
-  echo "Bitte gib den Downloadlink zur jeweiligen Version an. Alternativ nutze ich folgenden Link: ${giteadownloader_default}"
-  read -p "-> " giteadownloader
-  if [[ -z ${giteadownloader} ]]; then
-    giteadownloader="${giteadownloader_default}"
-  fi
-  echo "Du hast folgenden Link gewaehlt: ${giteadownloader}"
-
+read -p "-> " giteadownloader
+if [[ -z ${giteadownloader} ]]; then
+  giteadownloader="${gitea_download_url_default}"
 fi
+echo "Du hast folgenden Link gewaehlt: ${giteadownloader}"
+
 
 echo ""
 echo ""
