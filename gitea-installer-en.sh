@@ -18,7 +18,7 @@ then
 fi
 
 
-# variablen setzen
+# set variables
 
 shell_arguments=$1
 gitea_latest_version=${1:-$(curl --silent "https://api.github.com/repos/go-gitea/gitea/releases/latest" | jq -r '.tag_name' 2>&1 | sed -e 's|.*-||' -e 's|^v||')}
@@ -95,14 +95,14 @@ mysql -e "CREATE DATABASE $dbtable;"
 mysql -e "GRANT ALL PRIVILEGES ON $dbtable . * TO '$dbuser'@'localhost';"
 mysql -e "FLUSH PRIVILEGES;"
 
-# systemvariable setzen
+# set system variable
 echo "//-->> Set system variables"
 export GITEA_WORK_DIR=/var/lib/gitea/ >> /dev/null 2>&1
 
-echo "//-->> Copy Gite to: /usr/local/bin/gitea (replace binary to upgrade.)"
+echo "//-->> Copy Gitea to: /usr/local/bin/gitea (replace binary to upgrade.)"
 mv gitea /usr/local/bin/gitea
 
-# erstelle gitea als service
+# create gitea as service
 echo "//-->> Create gitea-servive"
 cp "$pwd/config/gitea-service.txt" "/etc/systemd/system/gitea.service"
 systemctl enable gitea >> /dev/null 2>&1
@@ -124,7 +124,7 @@ fi
 
 echo ""
 echo ""
-# datenbankverbindung ausgeben
+# print database connection
 echo "##########################################################################"
 echo "Gitea was installed successfully!"
 echo "Now, open your browser and visit: http://$deineIP:3000"
