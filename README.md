@@ -29,9 +29,9 @@ properly (e.x. LXC)
    sudo apt install curl jq -y
    ```
 2. Download this repo
-    1. Cone via GitHub SSH `git clone git@github.com:uvulpos/gitea-installer.git`
-    1. Cone via GitHub HTTPS `git clone https://github.com/uvulpos/gitea-installer.git`
-    1. Cone via GitHub CLI `gh repo clone uvulpos/gitea-installer`
+    1. Clone via GitHub SSH `git clone git@github.com:uvulpos/gitea-installer.git`
+    1. Clone via GitHub HTTPS `git clone https://github.com/uvulpos/gitea-installer.git`
+    1. Clone via GitHub CLI `gh repo clone uvulpos/gitea-installer`
     1. Download zip release [here](https://github.com/uvulpos/gitea-installer/releases) and extract it
 3. Execute installer (this may take some time because I also update the server)
     1. Execute english version `bash ./gitea-installer-en.sh`
